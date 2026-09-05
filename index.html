@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satori Sağlık &amp; Dönüşüm Merkezi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F2942;
+    --navy-soft:#1B3A57;
+    --teal:#1B7B76;
+    --teal-soft:#E6F1F0;
+    --slate:#334155;
+    --muted:#64748B;
+    --bg:#F8FAFC;
+    --border:#E2E8F0;
+    --white:#FFFFFF;
+    --max:1120px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--slate);
+    background:var(--white);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    color:var(--navy);
+    font-weight:500;
+    line-height:1.2;
+    margin:0;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.02em;
+    color:var(--teal);
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  section{padding:112px 0;}
+  @media(max-width:720px){ section{padding:72px 0;} .wrap{padding:0 20px;} }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(248,250,252,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{
+    max-width:var(--max); margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces',serif; font-size:21px; color:var(--navy); font-weight:600;
+  }
+  .brand .mark{width:30px;height:30px;flex-shrink:0;}
+  .brand small{
+    display:block; font-family:'Inter',sans-serif; font-size:10.5px; font-weight:500;
+    letter-spacing:0.03em; color:var(--muted); margin-top:1px;
+  }
+  .nav-links{display:flex; align-items:center; gap:36px;}
+  .nav-links a{
+    font-size:14.5px; font-weight:500; color:var(--slate);
+    transition:color .15s;
+  }
+  .nav-links a:hover{color:var(--teal);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:12px 24px; border-radius:3px; font-size:14.5px; font-weight:600;
+    cursor:pointer; border:1px solid transparent; transition:all .18s;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--navy); color:var(--white);}
+  .btn-primary:hover{background:var(--teal);}
+  .btn-ghost{border-color:var(--navy); color:var(--navy);}
+  .btn-ghost:hover{background:var(--navy); color:var(--white);}
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:4px;}
+  .menu-toggle span{display:block; width:22px; height:2px; background:var(--navy); margin:5px 0;}
+  @media(max-width:900px){
+    .nav-links{
+      position:absolute; top:100%; left:0; right:0; background:var(--white);
+      flex-direction:column; align-items:flex-start; gap:0;
+      border-bottom:1px solid var(--border);
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:400px;}
+    .nav-links a{padding:14px 32px; width:100%; border-top:1px solid var(--border);}
+    .nav-links .btn{margin:16px 32px;}
+    .menu-toggle{display:block;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding:120px 0 100px;
+    background:linear-gradient(180deg,#F8FAFC 0%, #FFFFFF 100%);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:center;
+    position:relative; z-index:2;
+  }
+  @media(max-width:900px){ .hero-grid{grid-template-columns:1fr;} .hero{padding:80px 0 60px;} }
+  .hero h1{
+    font-size:clamp(34px,4.4vw,52px);
+    letter-spacing:-0.01em;
+  }
+  .hero .sub{
+    margin-top:24px; font-size:18px; color:var(--muted); max-width:52ch;
+  }
+  .hero-ctas{display:flex; gap:16px; margin-top:36px; flex-wrap:wrap;}
+  .hero-figure{position:relative; width:100%; aspect-ratio:1/1; max-width:440px; justify-self:end;}
+  @media(max-width:900px){ .hero-figure{justify-self:center; max-width:320px;} }
+  .hero-figure svg{width:100%;height:100%;}
+  .hero-note{
+    opacity:0; animation:rise .8s ease forwards;
+  }
+  .hero-note:nth-child(1){animation-delay:.05s;}
+  .hero-note:nth-child(2){animation-delay:.18s;}
+  .hero-note:nth-child(3){animation-delay:.3s;}
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .hero-note{animation:none; opacity:1;}
+  }
+
+  /* ---------- İkilikler / strip ---------- */
+  .value-strip{
+    border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+    background:var(--bg);
+  }
+  .value-strip .wrap{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+  }
+  @media(max-width:820px){ .value-strip .wrap{grid-template-columns:repeat(2,1fr);} }
+  .value-strip .item{
+    padding:36px 28px; border-right:1px solid var(--border);
+  }
+  .value-strip .item:last-child{border-right:none;}
+  @media(max-width:820px){
+    .value-strip .item{border-right:1px solid var(--border);}
+    .value-strip .item:nth-child(2n){border-right:none;}
+  }
+  .value-strip .item h4{font-size:15.5px; margin-bottom:8px;}
+  .value-strip .item p{font-size:14px; color:var(--muted);}
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:72px; align-items:start;
+  }
+  @media(max-width:900px){ .about-grid{grid-template-columns:1fr; gap:48px;} }
+  .about-grid h2{font-size:clamp(28px,3vw,36px); margin-bottom:22px;}
+  .about-grid .lead{font-size:17px; color:var(--slate); margin-bottom:20px;}
+  .approach-list{margin-top:28px; display:flex; flex-direction:column; gap:20px;}
+  .approach-list li{display:flex; gap:16px;}
+  .approach-list .dot{
+    width:8px;height:8px;border-radius:50%;background:var(--teal); margin-top:9px; flex-shrink:0;
+  }
+  .approach-list h4{font-size:15.5px; margin-bottom:4px;}
+  .approach-list p{font-size:14.5px; color:var(--muted);}
+  .mv-card{
+    background:var(--navy); color:var(--white); border-radius:4px;
+    padding:36px; margin-bottom:20px;
+  }
+  .mv-card h3{color:var(--white); font-size:19px; margin-bottom:12px;}
+  .mv-card p{font-size:14.5px; color:#C9D6E3; line-height:1.7;}
+  .mv-card.teal{background:var(--teal);}
+  .mv-card.teal p{color:#DFF0EE;}
+
+  /* ---------- Units ---------- */
+  .units-header{max-width:640px; margin-bottom:56px;}
+  .units-header h2{font-size:clamp(28px,3vw,36px); margin-bottom:16px;}
+  .units-header p{font-size:16.5px; color:var(--muted);}
+  .unit-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media(max-width:900px){ .unit-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:620px){ .unit-grid{grid-template-columns:1fr;} }
+  .unit-card{
+    border:1px solid var(--border); border-radius:6px; padding:32px 28px;
+    background:var(--white); transition:box-shadow .2s, transform .2s;
+  }
+  .unit-card:hover{box-shadow:0 12px 32px rgba(15,41,66,0.08); transform:translateY(-2px);}
+  .unit-card .icon{
+    width:44px;height:44px; border-radius:50%; background:var(--teal-soft);
+    display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+  }
+  .unit-card .icon svg{width:22px;height:22px;}
+  .unit-card h3{font-size:18.5px; margin-bottom:10px;}
+  .unit-card p{font-size:14.5px; color:var(--muted);}
+  .unit-card .tag{
+    display:inline-block; margin-top:14px; font-size:12px; font-weight:600;
+    color:var(--teal); background:var(--teal-soft); padding:4px 10px; border-radius:20px;
+  }
+
+  /* Detailed accordion units */
+  .detail-block{
+    margin-top:64px; border-top:1px solid var(--border); padding-top:56px;
+  }
+  .detail-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:32px;
+    flex-wrap:wrap; margin-bottom:32px;
+  }
+  .detail-head h3{font-size:24px; max-width:60ch;}
+  .detail-head p{font-size:15px; color:var(--muted); margin-top:10px; max-width:64ch;}
+  .accordion{border-top:1px solid var(--border);}
+  .acc-item{border-bottom:1px solid var(--border);}
+  .acc-trigger{
+    width:100%; display:flex; align-items:center; gap:18px; justify-content:space-between;
+    background:none; border:none; text-align:left; cursor:pointer; padding:20px 0;
+    font-family:'Inter',sans-serif;
+  }
+  .acc-trigger .num{
+    font-family:'Fraunces',serif; color:var(--teal); font-size:15px; width:28px; flex-shrink:0;
+  }
+  .acc-trigger .title{
+    flex:1; font-size:15.5px; font-weight:600; color:var(--navy);
+  }
+  .acc-trigger .plus{
+    width:20px;height:20px; position:relative; flex-shrink:0;
+  }
+  .acc-trigger .plus::before, .acc-trigger .plus::after{
+    content:''; position:absolute; background:var(--navy); border-radius:2px;
+    transition:transform .25s;
+  }
+  .acc-trigger .plus::before{width:14px;height:2px; top:9px; left:3px;}
+  .acc-trigger .plus::after{width:2px;height:14px; top:3px; left:9px;}
+  .acc-item.open .acc-trigger .plus::after{transform:rotate(90deg); opacity:0;}
+  .acc-panel{
+    max-height:0; overflow:hidden; transition:max-height .3s ease;
+  }
+  .acc-panel-inner{padding:0 0 24px 46px; font-size:14.5px; color:var(--muted); max-width:70ch;}
+
+  /* ---------- Neden Biz ---------- */
+  .why{background:var(--navy); color:var(--white);}
+  .why .units-header p{color:#B9C6D3;}
+  .why .units-header h2{color:var(--white);}
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:rgba(255,255,255,0.12); border-radius:6px; overflow:hidden;}
+  @media(max-width:720px){ .why-grid{grid-template-columns:1fr;} }
+  .why-card{background:var(--navy-soft); padding:36px 32px;}
+  .why-card .n{font-family:'Fraunces',serif; font-size:28px; color:var(--teal); margin-bottom:14px; display:block;}
+  .why-card h4{color:var(--white); font-size:17px; margin-bottom:10px;}
+  .why-card p{font-size:14.5px; color:#B9C6D3;}
+
+  /* ---------- SSS ---------- */
+  .faq-wrap{max-width:760px; margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--border);}
+  .faq-item:first-child{border-top:1px solid var(--border);}
+
+  /* ---------- Contact ---------- */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px;}
+  @media(max-width:900px){ .contact-grid{grid-template-columns:1fr; gap:48px;} }
+  .contact-info h2{font-size:clamp(28px,3vw,36px); margin-bottom:16px;}
+  .contact-info > p{font-size:16px; color:var(--muted); margin-bottom:32px; max-width:48ch;}
+  .info-row{display:flex; gap:16px; margin-bottom:22px;}
+  .info-row .ic{
+    width:38px;height:38px; border-radius:50%; background:var(--teal-soft);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .info-row .ic svg{width:18px;height:18px;}
+  .info-row h4{font-size:14px; color:var(--navy); margin-bottom:2px;}
+  .info-row p{font-size:14.5px; color:var(--muted);}
+  .placeholder-note{
+    margin-top:28px; font-size:12.5px; color:var(--muted); background:var(--bg);
+    border:1px dashed var(--border); padding:14px 16px; border-radius:4px;
+  }
+  form{display:flex; flex-direction:column; gap:16px;}
+  .field label{display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;}
+  .field input, .field textarea{
+    width:100%; border:1px solid var(--border); border-radius:4px; padding:13px 14px;
+    font-family:'Inter',sans-serif; font-size:14.5px; color:var(--slate); background:var(--white);
+    transition:border-color .15s;
+  }
+  .field input:focus, .field textarea:focus{outline:none; border-color:var(--teal);}
+  .field textarea{resize:vertical; min-height:110px;}
+  form .btn{margin-top:6px; align-self:flex-start;}
+  .form-success{
+    display:none; background:var(--teal-soft); color:var(--teal); padding:16px 18px;
+    border-radius:4px; font-size:14.5px; font-weight:500;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--navy); color:#B9C6D3; padding:64px 0 32px;}
+  .footer-top{
+    display:flex; justify-content:space-between; gap:48px; flex-wrap:wrap;
+    padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-brand{max-width:340px;}
+  .footer-brand .brand{color:var(--white);}
+  .footer-brand p{font-size:14px; margin-top:16px; color:#8FA3B5;}
+  .footer-cols{display:flex; gap:64px; flex-wrap:wrap;}
+  .footer-col h5{font-size:13px; color:var(--white); margin-bottom:16px; font-weight:600;}
+  .footer-col li{margin-bottom:10px;}
+  .footer-col a{font-size:14px; color:#B9C6D3; transition:color .15s;}
+  .footer-col a:hover{color:var(--teal);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; padding-top:28px; font-size:12.5px;
+    color:#8FA3B5; flex-wrap:wrap; gap:12px;
+  }
+
+  .fade-in{opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;}
+  .fade-in.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none">
+        <circle cx="16" cy="20" r="12" stroke="#1B7B76" stroke-width="2"/>
+        <circle cx="26" cy="20" r="12" stroke="#0F2942" stroke-width="2"/>
+      </svg>
+      <span>Satori<small>SAĞLIK &amp; DÖNÜŞÜM MERKEZİ</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menüyü aç"><span></span><span></span><span></span></button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#hakkimizda">Hakkımızda</a>
+      <a href="#hizmetler">Hizmet Birimleri</a>
+      <a href="#neden-biz">Neden Biz</a>
+      <a href="#sss">Sıkça Sorulan Sorular</a>
+      <a href="#iletisim" class="btn btn-primary">Randevu Talebi</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow hero-note">BÜTÜNCÜL SAĞLIK MERKEZİ</p>
+        <h1 class="hero-note">Bedeninizle, Zihninizle ve Yaşamınızla Bütüncül Bir Bağ</h1>
+        <p class="sub hero-note">Cinsel sağlıktan üreme sağlığına, doğuma hazırlıktan bütüncül yaşam programlarına; bilimsel, etik ve yargısız bir yaklaşımla yaşamınızın her evresinde yanınızdayız.</p>
+        <div class="hero-ctas hero-note">
+          <a href="#iletisim" class="btn btn-primary">Randevu Talebi Oluşturun</a>
+          <a href="#hizmetler" class="btn btn-ghost">Hizmetlerimizi İnceleyin</a>
+        </div>
+      </div>
+      <div class="hero-figure hero-note">
+        <svg viewBox="0 0 420 420" fill="none">
+          <circle cx="150" cy="180" r="110" stroke="#1B7B76" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="240" cy="180" r="110" stroke="#0F2942" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="195" cy="270" r="110" stroke="#1B7B76" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="150" cy="180" r="70" fill="#E6F1F0"/>
+          <circle cx="240" cy="180" r="70" fill="#EFF3F6"/>
+          <circle cx="195" cy="270" r="70" fill="#E6F1F0" opacity="0.7"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE STRIP -->
+  <div class="value-strip">
+    <div class="wrap">
+      <div class="item"><h4>Bilimsellik</h4><p>Güncel tıp ve psikoloji literatürüne dayalı çalışma ilkesi.</p></div>
+      <div class="item"><h4>Mutlak Mahremiyet</h4><p>Danışan gizliliği her koşulda en üst seviyede korunur.</p></div>
+      <div class="item"><h4>Yargısız Alan</h4><p>Kimlik, yaş veya deneyim gözetmeksizin güvenli bir ortam.</p></div>
+      <div class="item"><h4>Multidisipliner Ekip</h4><p>Farklı uzmanlık alanlarının bir arada çalışması.</p></div>
+    </div>
+  </div>
+
+  <!-- HAKKIMIZDA -->
+  <section id="hakkimizda">
+    <div class="wrap about-grid">
+      <div class="fade-in">
+        <p class="eyebrow">HAKKIMIZDA</p>
+        <h2>Sağlığa Bütüncül ve Tabusuz Bir Yaklaşım</h2>
+        <p class="lead">Cinsel ve üreme sağlığı, çoğu zaman kulaktan dolma bilgiler ve toplumsal tabular nedeniyle göz ardı edilen bir alandır. Merkezimiz, bu tabuları bilgi ve empatiyle dönüştürmek; bireylerin kendi bedenleri, cinsellikleri ve yaşamlarıyla sağlıklı ilişkiler kurmalarını sağlamak amacıyla kurulmuştur.</p>
+        <p style="font-size:15px;color:var(--muted)">Cinselliği ve üreme sağlığını yalnızca bir sorun veya hastalık odağında değil; bedensel, ruhsal ve sosyal iyi oluşun doğal bir parçası olarak ele alıyoruz.</p>
+        <ul class="approach-list">
+          <li>
+            <span class="dot"></span>
+            <div><h4>Koruyucu Sağlık</h4><p>Doğru bilgi ve psiko-eğitim ile sorunlar ortaya çıkmadan önleyici adımlar atıyoruz.</p></div>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <div><h4>Klinik Destek</h4><p>Ortaya çıkan güçlüklerde kanıta dayalı yöntemlerle bireye ve çifte özel yol haritaları çiziyoruz.</p></div>
+          </li>
+          <li>
+            <span class="dot"></span>
+            <div><h4>Disiplinler Arası İş Birliği</h4><p>Hekim, psikiyatrist, ebe ve diğer sağlık profesyonelleriyle koordineli, bütüncül çözümler sunuyoruz.</p></div>
+          </li>
+        </ul>
+      </div>
+      <div class="fade-in">
+        <div class="mv-card">
+          <h3>Misyonumuz</h3>
+          <p>Toplumun her kesimine bilimsel, etik ve hak odaklı cinsel sağlık ile üreme sağlığı hizmetleri sunmak; psiko-eğitim ve koruyucu çalışmalarla bireylerin beden farkındalığını ve cinsel iyi oluşunu artırmak; cinsel işlev bozuklukları, travma ve ilişkisel sorunlarda multidisipliner ve kanıta dayalı yaklaşımlarla bireylerin ve çiftlerin yaşam kalitesini yükseltmektir.</p>
+        </div>
+        <div class="mv-card teal">
+          <h3>Vizyonumuz</h3>
+          <p>Cinsel sağlık ve üreme sağlığı alanında tabuları kıran, bilimin ve etiğin öncülüğünde bütüncül hizmet sunan, toplumsal farkındalık yaratan ve ulusal/uluslararası düzeyde referans kabul edilen lider bir sağlık merkezi olmaktır.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HİZMETLER -->
+  <section id="hizmetler" style="background:var(--bg)">
+    <div class="wrap">
+      <div class="units-header fade-in">
+        <p class="eyebrow">HİZMET BİRİMLERİMİZ</p>
+        <h2>Yaşamın her evresini kapsayan altı uzmanlık birimi</h2>
+        <p>Cinsel sağlıktan üreme sağlığına, doğuma hazırlıktan bütüncül yaşam programlarına uzanan geniş bir hizmet yelpazesiyle; insanı biyolojik, duygusal ve ilişkisel bir bütün olarak ele alıyoruz.</p>
+      </div>
+
+      <div class="unit-grid fade-in">
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6" stroke="#1B7B76" stroke-width="1.6"/><circle cx="15" cy="12" r="6" stroke="#0F2942" stroke-width="1.6"/></svg></div>
+          <h3>Seksoloji Birimi</h3>
+          <p>Yaş ve gelişim düzeyine uygun cinsel sağlık eğitimi, beden farkındalığı, cinsel iyi oluş ve toplumsal bilinci artırmaya yönelik psiko-eğitim çalışmaları.</p>
+        </div>
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.5-7-10a4.5 4.5 0 0 1 7-3.7A4.5 4.5 0 0 1 19 10c0 5.5-7 10-7 10Z" stroke="#0F2942" stroke-width="1.6"/></svg></div>
+          <h3>Cinsel ve Üreme Sağlığı Psikoterapisi</h3>
+          <p>Cinsel işlev bozuklukları, kaygı/performans sorunları, travma, ilişki dinamikleri ve üreme süreçlerinin psikolojik boyutlarına yönelik kanıta dayalı psikoterapi.</p>
+        </div>
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="#1B7B76" stroke-width="1.6"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#1B7B76" stroke-width="1.6"/></svg></div>
+          <h3>İnfertilite Birimi</h3>
+          <p>Çocuk sahibi olmakta güçlük yaşayan birey ve çiftlere yönelik değerlendirme; ovulasyon takibi, aşılama (IUI) ve tüp bebek (IVF/ICSI) uygulamaları.</p>
+        </div>
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c3 3 5 6 5 9a5 5 0 0 1-10 0c0-3 2-6 5-9Z" stroke="#0F2942" stroke-width="1.6"/></svg></div>
+          <h3>Gebe Okulu Birimi</h3>
+          <p>Gebelik, doğum ve ebeveynliğe hazırlık ile doğum sonrası dönemde anne-baba adaylarına yönelik eğitim ve destek programları.</p>
+        </div>
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="16" rx="2" stroke="#1B7B76" stroke-width="1.6"/><path d="M9 9h6M9 13h6" stroke="#1B7B76" stroke-width="1.6"/></svg></div>
+          <h3>Doğum Ünitesi</h3>
+          <p>Anne ve bebeğin sağlığını merkeze alan; vajinal ve gerekli tıbbi durumlarda sezaryen doğum hizmetlerinin bilimsel ve kişiye özgü yaklaşımlarla sunulduğu birim.</p>
+        </div>
+        <div class="unit-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21c-4-2.5-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7.5-7 10Z" stroke="#0F2942" stroke-width="1.6"/><path d="M12 8v6" stroke="#0F2942" stroke-width="1.6"/></svg></div>
+          <h3>Sağlıklı Yaşam Birimi</h3>
+          <p>Kişiye özel beslenme, detoks ve yenilenme programları ile hekim gözetiminde akupunktur, ozon terapi, mezoterapi gibi tamamlayıcı tıp (GETAT) uygulamaları.</p>
+        </div>
+      </div>
+
+      <!-- SEKSOLOJİ DETAIL -->
+      <div class="detail-block fade-in">
+        <div class="detail-head">
+          <div>
+            <h3>Seksoloji Birimi: Çalışma Başlıklarımız</h3>
+            <p>Bireylerin, çiftlerin ve ailelerin cinsel sağlık konusunda doğru, bilimsel ve güncel bilgiye ulaşmalarını sağlayan; beden farkındalığını ve cinsel iyi oluşu destekleyen on çalışma başlığı.</p>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">01</span><span class="title">Çocuk ve Ergenlerde Cinsel Gelişim ve Mahremiyet</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Yaşa ve gelişim düzeyine uygun cinsel gelişim eğitimi, beden farkındalığı, beden sınırları ve mahremiyet bilinci ile güvenli davranışlar ve ergenlik dönemine hazırlık.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">02</span><span class="title">Yetişkinlerde Cinsel Sağlık ve Cinsel İyi Oluş</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel sağlık bilinci, cinsel farkındalık, sağlıklı cinsel yaşam ve cinsel haklar ile doğru bilgi ve tutumların geliştirilmesine yönelik eğitimler.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">03</span><span class="title">Kadınlarda Cinsel Sağlık</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Ergenlik, yetişkinlik, gebelik, doğum sonrası, menopoz ve ileri yaş dönemlerinde cinsel sağlık, cinsel işlevler ve yaşam evrelerine özgü değişimlere yönelik bilgilendirme ve destek.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">04</span><span class="title">Erkeklerde Cinsel Sağlık</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Erkek yaşamının farklı dönemlerinde cinsel sağlık ve farkındalık, cinsel işlevler ve yaşa bağlı değişimlere uyum konularında bilgilendirme ve destek çalışmaları.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">05</span><span class="title">Çiftlerde Cinsellik ve Cinsel İletişim</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel iletişim kanallarının açılması, duygusal ve fiziksel yakınlığın güçlendirilmesi, cinsel beklenti ve ihtiyaçların sağlıklı ifadesi ve cinsel uyum.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">06</span><span class="title">Ebeveyn ve Bakım Verenlere Yönelik Eğitim</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Çocukların cinsel gelişimini doğru destekleme yolları, ergenlik döneminde ebeveyn-çocuk iletişimi ve çocukların sorularına sağlıklı yaklaşım rehberliği.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">07</span><span class="title">Eğitimler, Seminerler ve Toplumsal Farkındalık</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Okullar, üniversiteler ve kurumlar için eğitim ve atölyeler; toplumsal farkındalık programları ve sosyal sorumluluk projeleri.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">08</span><span class="title">Temel Cinsel Anatomi ve Beden Farkındalığı</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Bireylerin kendi bedenlerini, cinsel ve üreme organlarını tanıması; temel yapı ve işlevlere dair bilimsel bilgilendirme.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">09</span><span class="title">Cinsel Haz, Uyarılma ve Cinsel Doyum</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel haz ve uyarılma süreçlerinin anlaşılması; ihtiyaç ve tercihler üzerine farkındalık ile partnerler arası doyumu destekleyen eğitim çalışmaları.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">10</span><span class="title">Bilimsel Araştırma, Multidisipliner İş Birliği ve Yönlendirme</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Alanda bilimsel çalışmalar yürütülmesi; farklı sağlık disiplinleriyle koordineli çalışma ve uygun uzmanlara yönlendirme.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PSİKOTERAPİ DETAIL -->
+      <div class="detail-block fade-in">
+        <div class="detail-head">
+          <div>
+            <h3>Cinsel ve Üreme Sağlığı Psikoterapisi: Çalışma Başlıklarımız</h3>
+            <p>Bireysel veya ilişkisel düzeyde yaşanan cinsel işlev bozuklukları, kaygılar, travmalar ve yaşam evrelerindeki değişimlerin ruhsal boyutuna odaklanan klinik psikoterapi hizmetleri.</p>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">01</span><span class="title">Cinsel İşlev Bozukluklarına Yönelik Psikoterapi</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Vajinismus ve cinsel ilişki sırasında ağrı, erken boşalma ve ereksiyon sorunları, cinsel istekte azalma, uyarılma ve orgazm güçlükleri.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">02</span><span class="title">Cinsellikle İlişkili Kaygı, Korku ve Performans Sorunları</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel performans kaygısı, utanma ve suçluluk duygularıyla çalışma, olumsuz cinsel deneyimlerin psikolojik etkilerini giderme.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">03</span><span class="title">Beden Algısı, Cinsel Özgüven ve Cinsel Kimlik</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Beden memnuniyetsizliği ve beden algısı çalışmaları, cinsel özgüvenin geliştirilmesi, kişinin kendi bedeniyle barışık bir ilişki kurması.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">04</span><span class="title">Gebelik, Doğum Sonrası ve Üreme Süreçlerinde Psikoterapi</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Gebelik ve doğum sonrası ruhsal uyum; doğurganlık süreçlerinin getirdiği duygusal ve ilişkisel yükler; üreme süreçlerinin cinsel yaşam ve beden algısına etkileri.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">05</span><span class="title">Menstrüasyon, Menopoz ve Yaşam Dönemlerine Bağlı Destek</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Hormonal ve bedensel değişimlerin duygu durumuna etkileri; menopoz ve orta/ileri yaş döneminde cinsel yaşam ve ilişki desteği.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">06</span><span class="title">Travma ve Olumsuz Cinsel Deneyimlerin Psikoterapisi</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel travma, istismar ve zorlayıcı deneyimlerin işlenmesi; güvenli ve travma odaklı terapi yaklaşımları.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">07</span><span class="title">Çift ve İlişki Odaklı Psikoterapi</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Cinsel istek farklılıkları ve uyum sorunları; ilişkisel çatışmalar, yakınlık ve güven problemleri; cinsel yaşamı etkileyen çift dinamikleri.</div></div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-trigger"><span class="num">08</span><span class="title">Multidisipliner Çalışma</span><span class="plus"></span></button>
+            <div class="acc-panel"><div class="acc-panel-inner">Biyolojik, psikolojik ve sosyal boyutların birlikte değerlendirilmesi; hekim, ebe, psikiyatrist ve diğer uzmanlarla koordineli terapi takibi.</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEDEN BİZ -->
+  <section id="neden-biz" class="why">
+    <div class="wrap">
+      <div class="units-header fade-in">
+        <p class="eyebrow" style="color:#7FC7C2">DEĞERLERİMİZ</p>
+        <h2>Neden Biz?</h2>
+      </div>
+      <div class="why-grid fade-in">
+        <div class="why-card"><span class="n">01</span><h4>Bilimsellik &amp; Kanıta Dayalılık</h4><p>Tüm süreçlerimizde güncel tıp ve psikoloji literatürünü esas alıyoruz.</p></div>
+        <div class="why-card"><span class="n">02</span><h4>Mutlak Mahremiyet &amp; Etik</h4><p>Danışan gizliliğini her koşulda en üst seviyede tutuyoruz.</p></div>
+        <div class="why-card"><span class="n">03</span><h4>Yargısız ve Kapsayıcı Alan</h4><p>Kimliğiniz, yaşınız veya deneyiminiz ne olursa olsun güvenle başvurabileceğiniz bir ortam sunuyoruz.</p></div>
+        <div class="why-card"><span class="n">04</span><h4>Multidisipliner Yaklaşım</h4><p>Farklı uzmanlık alanlarını bir araya getirerek ihtiyaca özel çözümler üretiyoruz.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SSS -->
+  <section id="sss">
+    <div class="wrap">
+      <div class="units-header fade-in" style="margin:0 auto 48px; text-align:center;">
+        <p class="eyebrow">SIKÇA SORULAN SORULAR</p>
+        <h2>Merak Ettikleriniz</h2>
+      </div>
+      <div class="faq-wrap fade-in">
+        <div class="faq-item acc-item">
+          <button class="acc-trigger"><span class="title" style="font-size:16px;">Terapi ve danışmanlık süreçlerinde gizlilik nasıl sağlanır?</span><span class="plus"></span></button>
+          <div class="acc-panel"><div class="acc-panel-inner" style="padding-left:0;">Tüm başvurularınız ve görüşmelerimiz etik ilkeler ve yasal çerçeveler dâhilinde mutlak gizlilik esasına tabidir. Bilgileriniz üçüncü şahıslarla kesinlikle paylaşılmaz.</div></div>
+        </div>
+        <div class="faq-item acc-item">
+          <button class="acc-trigger"><span class="title" style="font-size:16px;">Sadece çift olarak mı başvurabilirim?</span><span class="plus"></span></button>
+          <div class="acc-panel"><div class="acc-panel-inner" style="padding-left:0;">Hayır. Terapi ve psiko-eğitim süreçlerimize bireysel olarak da başvurabilir, cinsel ve üreme sağlığınızla ilgili kişisel destek alabilirsiniz.</div></div>
+        </div>
+        <div class="faq-item acc-item">
+          <button class="acc-trigger"><span class="title" style="font-size:16px;">Tıbbi bir tedavi de uyguluyor musunuz?</span><span class="plus"></span></button>
+          <div class="acc-panel"><div class="acc-panel-inner" style="padding-left:0;">Merkezimizde psikolojik değerlendirme, psikoterapi ve psiko-eğitim hizmetleri sunulmaktadır. Tıbbi değerlendirme veya müdahale gerektiren durumlarda multidisipliner anlayışımız gereği sizleri ilgili uzman hekimlere yönlendiriyor ve süreci iş birliği içinde yürütüyoruz.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section id="iletisim" style="background:var(--bg)">
+    <div class="wrap contact-grid">
+      <div class="contact-info fade-in">
+        <p class="eyebrow">İLETİŞİM</p>
+        <h2>Güvenli Bir Adım Atın</h2>
+        <p>Sorularınız, randevu talepleriniz veya hizmetlerimiz hakkında detaylı bilgi almak için bizimle iletişime geçebilirsiniz. Sizi dinlemeye ve desteklemeye hazırız.</p>
+
+        <div class="info-row">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z" stroke="#1B7B76" stroke-width="1.6"/><circle cx="12" cy="10" r="2.4" stroke="#1B7B76" stroke-width="1.6"/></svg></div>
+          <div><h4>Adres</h4><p>[Merkez adresinizi buraya ekleyeceğiz]</p></div>
+        </div>
+        <div class="info-row">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 14l5 2v3a2 2 0 0 1-2 2C11.6 21 3 12.4 3 4a2 2 0 0 1 2-2Z" stroke="#1B7B76" stroke-width="1.6"/></svg></div>
+          <div><h4>Telefon</h4><p>[Telefon numaranızı buraya ekleyeceğiz]</p></div>
+        </div>
+        <div class="info-row">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#1B7B76" stroke-width="1.6"/><path d="m4 6 8 7 8-7" stroke="#1B7B76" stroke-width="1.6"/></svg></div>
+          <div><h4>E-posta</h4><p>[E-posta adresinizi buraya ekleyeceğiz]</p></div>
+        </div>
+        <div class="placeholder-note">Not: Adres, telefon ve e-posta alanları yer tutucudur — gerçek iletişim bilgilerinizi paylaştığınızda güncellenecektir.</div>
+      </div>
+
+      <div class="fade-in">
+        <form id="contactForm">
+          <div class="field"><label for="name">Ad Soyad</label><input id="name" type="text" required placeholder="Adınız Soyadınız"></div>
+          <div class="field"><label for="email">E-posta</label><input id="email" type="email" required placeholder="ornek@eposta.com"></div>
+          <div class="field"><label for="phone">Telefon</label><input id="phone" type="tel" placeholder="05xx xxx xx xx"></div>
+          <div class="field"><label for="message">Mesajınız</label><textarea id="message" required placeholder="Randevu talebiniz veya sorunuz..."></textarea></div>
+          <button type="submit" class="btn btn-primary">Mesajı Gönder</button>
+          <div class="form-success" id="formSuccess">Mesajınız alınmıştır. En kısa sürede sizinle iletişime geçeceğiz.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg class="mark" viewBox="0 0 40 40" fill="none">
+            <circle cx="16" cy="20" r="12" stroke="#1B7B76" stroke-width="2"/>
+            <circle cx="26" cy="20" r="12" stroke="#FFFFFF" stroke-width="2"/>
+          </svg>
+          <span>Satori</span>
+        </a>
+        <p>Bilimsel, etik ve hak odaklı bir yaklaşımla cinsel sağlık, üreme sağlığı ve bütüncül yaşam alanında yanınızdayız.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Hizmet Birimleri</h5>
+          <ul>
+            <li><a href="#hizmetler">Seksoloji Birimi</a></li>
+            <li><a href="#hizmetler">Psikoterapi Birimi</a></li>
+            <li><a href="#hizmetler">İnfertilite Birimi</a></li>
+            <li><a href="#hizmetler">Gebe Okulu</a></li>
+            <li><a href="#hizmetler">Doğum Ünitesi</a></li>
+            <li><a href="#hizmetler">Sağlıklı Yaşam</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Kurumsal</h5>
+          <ul>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#neden-biz">Neden Biz</a></li>
+            <li><a href="#sss">SSS</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Satori Sağlık &amp; Dönüşüm Merkezi. Tüm hakları saklıdır.</span>
+      <span>Sağlıklı Beden • Bilinçli İlişkiler • Özgür İfade</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // accordions
+  document.querySelectorAll('.acc-item').forEach(item => {
+    const trigger = item.querySelector('.acc-trigger');
+    const panel = item.querySelector('.acc-panel');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      // close siblings within the same accordion group
+      const group = item.parentElement;
+      group.querySelectorAll('.acc-item.open').forEach(openItem => {
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.acc-panel').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        panel.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // contact form (front-end only demo)
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formSuccess').style.display = 'block';
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
